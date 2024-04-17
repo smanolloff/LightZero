@@ -333,7 +333,8 @@ class MuZeroCollector(ISerialCollector):
         # initializations
         init_obs = self._env.ready_obs
 
-        retry_waiting_time = 0.001
+        retry_waiting_time = 1
+        # retry_waiting_time = 0.001
         while len(init_obs.keys()) != self._env_num:
             # To be compatible with subprocess env_manager, in which sometimes self._env_num is not equal to
             # len(self._env.ready_obs), especially in tictactoe env.
