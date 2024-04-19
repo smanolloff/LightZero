@@ -3,11 +3,11 @@ from easydict import EasyDict
 # ==============================================================
 # begin of the most frequently changed config specified by the user
 # ==============================================================
-collector_env_num = 8
+collector_env_num = 1
 n_episode = 8
-evaluator_env_num = 5
-num_simulations = 30
-update_per_collect = 50
+evaluator_env_num = 1
+num_simulations = 300
+update_per_collect = 200
 batch_size = 256
 max_env_step = int(2e5)
 reanalyze_ratio = 0.
@@ -28,38 +28,30 @@ vcmi_gumbel_muzero_config = dict(
             # observation_shape=(11, 15, 86),
             observation_shape=(86, 11, 15),
             action_space_size=2311,
-            image_channel=86,  # does not seem to work
+            image_channel=86,  # this should've been named "n_channels"
             num_res_blocks=3,
-            num_channels=32,
-            fc_reward_layers=[256],
-            fc_value_layers=[256],
-            fc_policy_layers=[256],
-            support_scale=10,
-            reward_support_size=21,
-            value_support_size=21,
-            norm_type='BN',
-            downsample=False,
-            discrete_action_encoding_type='not_one_hot',
+            num_channels=16,
         ),
         cuda=False,
+        mcts_tree=True,
         env_type='board_games',
+        env_config_type='self_play',
         action_type='varied_action_space',
-        game_segment_length=5,
         update_per_collect=update_per_collect,
         batch_size=batch_size,
         optim_type='Adam',
         lr_piecewise_constant_decay=False,
-        learning_rate=0.003,
+        learning_rate=0.001,
         ssl_loss_weight=2,  # NOTE: default is 0.
         # grad_clip_value=0.5,
         num_simulations=num_simulations,
         reanalyze_ratio=reanalyze_ratio,
-        max_num_considered_actions=10,
+        max_num_considered_actions=1000,
         # NOTE：In board_games, we set large td_steps to make sure the value target is the final outcome.
         td_steps=30,
         num_unroll_steps=3,
         # NOTE：In board_games, we set discount_factor=1.
-        discount_factor=1,
+        discount_factor=0.99,
         n_episode=n_episode,
         eval_freq=int(500),
         replay_buffer_size=int(1e4),

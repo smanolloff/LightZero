@@ -40,7 +40,7 @@ class VcmiEnvLightZero(BaseEnv):
         if self._needs_init:
             self._needs_init = False
             self._env = VcmiEnv(
-                "gym/generated/896/896-3stack-30K-01.vmap",
+                "gym/generated/88/88-3stack-30K-01.vmap",
                 encoding_type="float",
                 reward_dmg_factor=5,
                 step_reward_fixed=-100,
